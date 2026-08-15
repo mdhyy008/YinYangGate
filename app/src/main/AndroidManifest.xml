@@ -1,56 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.dabai.TaiChi">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- 网络权限 -->
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"
+        tools:ignore="QueryAllPackagesPermission" />
+    <uses-permission android:name="moe.shizuku.manager.permission.API_V23" />
     <uses-permission android:name="android.permission.INTERNET" />
 
-
     <application
-        android:debuggable="false"
-        android:name=".utils.CarApplication"
         android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        tools:ignore="HardcodedDebugMode">
-        <activity android:name=".activitys.EggActivity" android:label="彩蛋"/>
-        <activity android:name=".activitys.IntroActivity" android:label="介绍页" />
-        <activity
-            android:name=".activitys.SettingsActivity"
-            android:label="设置" />
-        <activity
-            android:name=".activitys.FeedBack"
-            android:label="反馈"
-            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
+        android:theme="@style/Theme.YinYangGate">
+        <provider
+            android:name="rikka.shizuku.ShizukuProvider"
+            android:authorities="${applicationId}.shizuku"
+            android:enabled="true"
+            android:exported="true"
+            android:multiprocess="false"
+            android:permission="android.permission.INTERACT_ACROSS_USERS_FULL"
+            tools:replace="android:authorities" />
         <activity
             android:name=".MainActivity"
+            android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden"
+            android:theme="@style/Theme.YinYangGate">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- 设备管理 begin -->
+        </activity>
+
         <receiver
-            android:name=".receiver.DeviceReceiver"
-            android:description="@string/description_admin"
-            android:label="阴阳门 - 设备管理员模式"
-            android:permission="android.permission.BIND_DEVICE_ADMIN">
+            android:name=".admin.AdminReceiver"
+            android:description="@string/admin_description"
+            android:label="@string/admin_label"
+            android:permission="android.permission.BIND_DEVICE_ADMIN"
+            android:exported="true">
             <meta-data
                 android:name="android.app.device_admin"
-                android:resource="@xml/device_admin" />
-
+                android:resource="@xml/device_admin_receiver" />
             <intent-filter>
                 <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
-                <action android:name="android.app.action.DEVICE_ADMIN_DISABLE_REQUESTED" />
-                <action android:name="android.app.action.DEVICE_ADMIN_DISABLED" />
-
-                <category android:name="android.intent.category.HOME" />
             </intent-filter>
         </receiver>
     </application>

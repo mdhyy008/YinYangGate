@@ -1,6 +1,5 @@
 <resources>
-
     <string name="app_name">阴阳门</string>
-    <string name="description_admin">开启后，才可以使用阴阳门设备管理员模式\n具体激活方式，请参考帮助与支持。</string>
-
+    <string name="admin_label">阴阳门设备管理员</string>
+    <string name="admin_description">用于在设备所有者模式下冻结/解冻应用（普通设备管理员无此能力）</string>
 </resources>
